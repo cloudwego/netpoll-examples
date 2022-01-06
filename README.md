@@ -1,9 +1,6 @@
 # netpoll-examples
 
-中文请看: [使用文档][guide-cn]
+中文请看: [使用文档](https://www.cloudwego.io/zh/docs/netpoll/getting-started/)
 
-For English please see: [Getting Started][guide-en]
+For English please see: [Getting Started](https://www.cloudwego.io/docs/netpoll/getting-started/)
 
-[guide-en]: https://github.com/cloudwego/netpoll/blob/main/docs/guide/guide_en.md
-
-[guide-cn]: https://github.com/cloudwego/netpoll/blob/main/docs/guide/guide_cn.md
