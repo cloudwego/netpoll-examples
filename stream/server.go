@@ -18,36 +18,32 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/cloudwego/netpoll"
 )
 
 func main() {
-	network, address := "tcp", ":8080"
+	network, address := "tcp", ":8082"
 	listener, _ := netpoll.CreateListener(network, address)
-
 	eventLoop, _ := netpoll.NewEventLoop(
-		handle,
-		netpoll.WithOnPrepare(prepare),
-		netpoll.WithReadTimeout(time.Second),
+		nil,
+		netpoll.WithOnConnect(onConnect),
 	)
 
 	// start listen loop ...
 	eventLoop.Serve(listener)
 }
 
-var _ netpoll.OnPrepare = prepare
-var _ netpoll.OnRequest = handle
+var _ netpoll.OnConnect = onConnect
 
-func prepare(connection netpoll.Connection) context.Context {
+func onConnect(ctx context.Context, connection netpoll.Connection) context.Context {
+	go func() {
+		for range time.Tick(time.Second) {
+			connection.Writer().WriteString(fmt.Sprintf("%s\n", time.Now().Format(time.RFC3339)))
+			connection.Writer().Flush()
+		}
+	}()
 	return context.Background()
-}
-
-func handle(ctx context.Context, connection netpoll.Connection) error {
-	reader := connection.Reader()
-	defer reader.Release()
-	msg, _ := reader.ReadString(reader.Len())
-	println(msg)
-	return nil
 }

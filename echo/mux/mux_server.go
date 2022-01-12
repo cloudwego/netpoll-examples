@@ -25,7 +25,7 @@ import (
 	"github.com/cloudwego/netpoll"
 	"github.com/cloudwego/netpoll/mux"
 
-	"github.com/cloudwego/netpoll-examples/codec"
+	"github.com/cloudwego/netpoll-examples/echo/codec"
 )
 
 func main() {
