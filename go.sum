@@ -1,9 +1,9 @@
 github.com/bytedance/gopkg v0.0.0-20210705062217-74c74ebadcae h1:ERLYTdHnm2E8jwpprhHPvBhbPBaxnwl62tb3lR8Nd+k=
 github.com/bytedance/gopkg v0.0.0-20210705062217-74c74ebadcae/go.mod h1:birsdqRCbwnckJbdAvcSao+AzOyibVEoWB55MjpYpB8=
-github.com/cloudwego/netpoll v0.1.2 h1:NSvqHfCmmR3g0ASshwAB0F2RJvXK8v7ToFmhWzh/ukY=
-github.com/cloudwego/netpoll v0.1.2/go.mod h1:rZOiNI0FYjuvNybXKKhAPUja03loJi/cdv2F55AE6E8=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/joway/netpoll v0.0.4-0.20220112083038-2eefc181239d h1:1mx//ApM0tAisXfemrMgFGIlNQ2D9BkZtAIK058L4Iw=
+github.com/joway/netpoll v0.0.4-0.20220112083038-2eefc181239d/go.mod h1:rZOiNI0FYjuvNybXKKhAPUja03loJi/cdv2F55AE6E8=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
