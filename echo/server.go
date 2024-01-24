@@ -18,6 +18,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/cloudwego/netpoll"
@@ -30,6 +31,7 @@ func main() {
 	eventLoop, _ := netpoll.NewEventLoop(
 		handle,
 		netpoll.WithOnPrepare(prepare),
+		netpoll.WithOnConnect(connect),
 		netpoll.WithReadTimeout(time.Second),
 	)
 
@@ -38,10 +40,23 @@ func main() {
 }
 
 var _ netpoll.OnPrepare = prepare
+var _ netpoll.OnConnect = connect
 var _ netpoll.OnRequest = handle
+var _ netpoll.CloseCallback = close
 
 func prepare(connection netpoll.Connection) context.Context {
 	return context.Background()
+}
+
+func close(connection netpoll.Connection) error {
+	fmt.Printf("[%v] connection closed\n", connection.RemoteAddr())
+	return nil
+}
+
+func connect(ctx context.Context, connection netpoll.Connection) context.Context {
+	fmt.Printf("[%v] connection established\n", connection.RemoteAddr())
+	connection.AddCloseCallback(close)
+	return ctx
 }
 
 func handle(ctx context.Context, connection netpoll.Connection) error {
@@ -49,7 +64,9 @@ func handle(ctx context.Context, connection netpoll.Connection) error {
 	defer reader.Release()
 
 	msg, _ := reader.ReadString(reader.Len())
-	_, _ = writer.WriteString(msg)
+	fmt.Printf("[recv msg] %v\n", msg)
+
+	writer.WriteString(msg)
 	writer.Flush()
 
 	return nil
