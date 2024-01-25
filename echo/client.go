@@ -46,6 +46,7 @@ func main() {
 	writer.Flush()
 
 	reader := conn.Reader()
+	defer reader.Release()
 	echoMsg, _ := reader.ReadString(len(message))
 	fmt.Printf("[recv msg] %v\n", echoMsg)
 }
