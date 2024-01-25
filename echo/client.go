@@ -17,7 +17,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"time"
 
@@ -35,16 +34,6 @@ func main() {
 	dialer := netpoll.NewDialer()
 	conn, _ = dialer.DialConnection(network, address, timeout)
 
-	finish := make(chan bool)
-	conn.SetOnRequest(func(ctx context.Context, connection netpoll.Connection) error {
-		reader := connection.Reader()
-		defer reader.Release()
-		msg, _ := reader.ReadString(reader.Len())
-		fmt.Printf("[recv msg] %v\n", msg)
-		finish <- true
-		return nil
-	})
-
 	conn.AddCloseCallback(func(connection netpoll.Connection) error {
 		fmt.Printf("[%v] connection closed\n", connection.RemoteAddr())
 		return nil
@@ -52,8 +41,11 @@ func main() {
 
 	// write & send message
 	writer := conn.Writer()
-	writer.WriteString("hello world")
+	message := "hello world"
+	writer.WriteString(message)
 	writer.Flush()
 
-	_ = <-finish
+	reader := conn.Reader()
+	echoMsg, _ := reader.ReadString(len(message))
+	fmt.Printf("[recv msg] %v\n", echoMsg)
 }
