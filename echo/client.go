@@ -17,6 +17,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/cloudwego/netpoll"
@@ -33,8 +34,19 @@ func main() {
 	dialer := netpoll.NewDialer()
 	conn, _ = dialer.DialConnection(network, address, timeout)
 
+	conn.AddCloseCallback(func(connection netpoll.Connection) error {
+		fmt.Printf("[%v] connection closed\n", connection.RemoteAddr())
+		return nil
+	})
+
 	// write & send message
 	writer := conn.Writer()
-	writer.WriteString("hello world")
+	message := "hello world"
+	writer.WriteString(message)
 	writer.Flush()
+
+	reader := conn.Reader()
+	defer reader.Release()
+	echoMsg, _ := reader.ReadString(len(message))
+	fmt.Printf("[recv msg] %v\n", echoMsg)
 }
